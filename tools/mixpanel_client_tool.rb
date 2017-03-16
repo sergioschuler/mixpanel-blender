@@ -8,10 +8,14 @@ MIXPANEL_END_POINT = {
 }
 
 def mixpanel_client environment = :production, end_point = :segmentation
-  client = Mixpanel::Client.new(
-    api_key:    MIXPANEL_CREDENTIALS[environment][:api_key],
-    api_secret: MIXPANEL_CREDENTIALS[environment][:api_secret]
-  )
-  client.request_uri(MIXPANEL_END_POINT[end_point])
-  return client
+  unless MIXPANEL_CREDENTIALS[environment][:api_key] == 'insert_here'
+    client = Mixpanel::Client.new(
+      api_key:    MIXPANEL_CREDENTIALS[environment][:api_key],
+      api_secret: MIXPANEL_CREDENTIALS[environment][:api_secret]
+    )
+    client.request_uri(MIXPANEL_END_POINT[end_point])
+    return client
+  else
+    raise "Mixpanel credentials are not set. See /config/ to change it."
+  end
 end

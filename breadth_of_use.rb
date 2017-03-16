@@ -4,7 +4,11 @@ require 'pry'
 
 def generate_breadth_events_csv (event_list, from_date = Date.today - 90, to_date = Date.today)
   event_list.each do |event|
-	  events = fetch_raw_events(from_date, to_date, event)
+	  events = fetch_raw_events(
+      from_date, 
+      to_date, 
+      event, 
+      filters = {is_client: true})
 	  write_csv(events)
 	end
 end
