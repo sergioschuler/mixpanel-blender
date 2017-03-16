@@ -1,1 +1,2 @@
 *.csv
+config/mixpanel_credentials.rb

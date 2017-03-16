@@ -1,9 +1,8 @@
-require '../event_fetcher'
-require '../csv_writer'
+require_relative 'tools/require_all_tools'
 require 'date'
 require 'pry'
 
-def generate_breadth_events_csv (event_list, from_date = Date.today - 1, to_date = Date.today)
+def generate_breadth_events_csv (event_list, from_date = Date.today - 90, to_date = Date.today)
   event_list.each do |event|
 	  events = fetch_raw_events(from_date, to_date, event)
 	  write_csv(events)
@@ -24,4 +23,7 @@ event_list = [
   "Ativou Fluxo de Automacao"
 ]
 
-generate_breadth_events_csv(event_list)
+from_date = '2017-03-09'
+to_date = '2017-03-09'
+
+generate_breadth_events_csv(["Ativou Fluxo de Automacao"], from_date, to_date)

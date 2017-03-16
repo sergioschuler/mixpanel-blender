@@ -3,15 +3,21 @@ require 'fileutils'
 require 'pry'
 
 def generate_csv_name (raw_event_array)
+   puts "Generating CSV name"
    event_name = raw_event_array.first["event"]
    from_date = Time.at(raw_event_array.first["properties"]["time"]).strftime("%Y-%m-%d")
    to_date = Time.at(raw_event_array.last["properties"]["time"]).strftime("%Y-%m-%d")
    timestamp = Time.now.to_i
    csv_name = "#{from_date}--#{to_date}-#{timestamp}_#{event_name}.csv"
+   puts "CSV name generated: #{csv_name}"
+   return csv_name
 end
 
 def parse_event_headers(event)
+  puts "Parsing CSV headers"
   headers = ["Account ID", "Event name", "Event date", "Event time", event["properties"].keys].flatten
+  puts "CSV header parsed: #{headers}"
+  return headers
 end
 
 def parse_event_values(event)
@@ -30,6 +36,7 @@ def write_csv (raw_event_array)
 
   unless File.directory?(folder_name)
     FileUtils.mkdir_p(folder_name)
+    puts "Folder '#{folder_name}' created"
   end
 
   CSV.open("#{folder_name}/#{csv_name}", "a") do |csv|
