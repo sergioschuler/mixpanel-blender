@@ -4,7 +4,7 @@ require_relative '../config/mixpanel_credentials'
 
 MIXPANEL_END_POINT = {
   segmentation: 'https://mixpanel.com/api/2.0/segmentation/',
-  people: 'https://mixpanel.com/api/2.0/engage/'
+  accounts: 'https://mixpanel.com/api/2.0/engage/'
 }
 
 def mixpanel_client environment = :production, end_point = :segmentation
