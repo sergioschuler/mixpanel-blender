@@ -10,6 +10,20 @@ def generate_csv_name (raw_event_array)
    csv_name = "#{from_date}--#{to_date}-#{timestamp}_#{event_name}.csv"
 end
 
+def parse_event_headers(event)
+  headers = ["Account ID", "Event name", "Event date", "Event time", event["properties"].keys].flatten
+end
+
+def parse_event_values(event)
+  array_line_to_write = [
+    account_id = event["properties"]["id"],
+    event_name = event["event"],
+    event_date = Time.at(event["properties"]["time"].to_i).strftime("%Y-%m-%d"),
+    event_time = Time.at(event["properties"]["time"].to_i).strftime("%H:%M:%S"),
+    event["properties"].values
+  ].flatten
+end
+
 def write_csv (raw_event_array)
   csv_name = generate_csv_name(raw_event_array)
   folder_name = "csv"
@@ -19,21 +33,12 @@ def write_csv (raw_event_array)
   end
 
   CSV.open("#{folder_name}/#{csv_name}", "a") do |csv|
-    csv << ["Account ID", "Event name", "Event date", "Event time", "Account Name", "User ID"]
+    csv << parse_event_headers(raw_event_array.last)
   end
 
   raw_event_array.each do |event|
-    array_line_to_write = [
-      account_id = event["properties"]["id"],
-      event_name = event["event"],
-      event_date = Time.at(event["properties"]["time"].to_i).strftime("%Y-%m-%d"),
-      event_time = Time.at(event["properties"]["time"].to_i).strftime("%H:%M:%S"),
-      account_name = event["properties"]["account_name"],
-      user_id = event["properties"]["id_user"]
-    ]
-
     CSV.open("#{folder_name}/#{csv_name}", "a") do |csv|
-      csv << array_line_to_write
+      csv << parse_event_values(event)
     end
   end
 end
