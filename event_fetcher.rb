@@ -21,12 +21,12 @@ def mixpanel_client environment = :production, end_point = :segmentation
   return client
 end
 
-def fetch_raw_events from_date, to_date, event_list, environment = :production, output = 'json'
+def fetch_raw_events from_date, to_date, event_name, environment = :production, output = 'json'
   client = mixpanel_client
 
-  puts "Fetching Mixpanel data of #{event_list}"
+  puts "Fetching Mixpanel data of '#{event_name.upcase}'"
   data = client.request(
-    'export', from_date: from_date, to_date: to_date, event: event_list, format: output
+    'export', from_date: from_date, to_date: to_date, event: [event_name], format: output
   )
 end
 
