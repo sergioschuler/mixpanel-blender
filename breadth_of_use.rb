@@ -27,7 +27,7 @@ event_list = [
   "Ativou Fluxo de Automacao"
 ]
 
-from_date = '2017-03-09'
-to_date = '2017-03-09'
+from_date = '2016-11-03'
+to_date = '2017-03-19'
 
-generate_breadth_events_csv(["Ativou Fluxo de Automacao"], from_date, to_date)
+generate_breadth_events_csv(event_list, from_date, to_date)

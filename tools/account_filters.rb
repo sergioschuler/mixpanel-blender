@@ -14,7 +14,7 @@ def is_client? account_id
     account_properties = fetch_account(account_id)
     status = account_properties["results"][0]["$properties"]["É ou já foi Cliente"]
     $client_status[account_id] = status
-    Puts "ID #{account_id} status is #{status}"
+    puts "ID #{account_id} status is #{status}"
     return status
   else
     return $client_status[account_id]
