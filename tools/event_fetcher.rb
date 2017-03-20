@@ -23,22 +23,19 @@ def fetch_raw_events (
   puts "Completed fetch for '#{event_name.upcase}'"
   puts "Sample event:"
   puts data.first
-  #return data
 
-  if filters[:is_client] = true
-    filtered_data = filter_events_by_property(data, "is_client")
-    return filtered_data
-  else
-    return data
+  unless filters == false
+    filters.each do |k, v|
+      data = filter_events_by_property(data, k, v)
+    end
   end
+
+  return data
+
+  # if filters[:is_client] = true
+  #   filtered_data = filter_events_by_property(data, "is_client")
+  #   return filtered_data
+  # else
+  #   return data
+  # end
 end
-
-#Example:
-# event_list = [
-#   'Criou a Conta',
-#   'SmartNextStep: SmartNextStep View'
-# ]
-# data = fetch_raw_events('2017-03-03', '2017-03-04', event_list)
-# puts data
-
-
